@@ -1,0 +1,35 @@
+<app-header></app-header>
+<ul class="sidebar navbar-nav">
+    <!-- <li class="nav-item active">
+      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+        <i class="fas fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+    </li> -->
+    <li class="nav-item active">
+    <form [formGroup]="checkPaymentReqForm">
+      <label for="loanNumber">Loan#&nbsp;</label>
+      <input type = "numeric" class="form-control" #loanNum placeholder="Loan Number" formControlName="loanNumber" value = "" appOnlynumber readonly>
+    </form>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/get-payment-advice-list" routerLinkActive="active">
+        <span>Payment Advice</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/app-payments-in-process" routerLinkActive="active">
+        <span>Payments in Process</span></a>
+    </li>
+    <!-- <li class="nav-item">
+      <a class="nav-link" routerLink="#">
+        <span>Pending Payment</span>
+      </a>
+    </li> -->
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/app-logout" routerLinkActive="active">
+        <!-- <i class="fas fa-power-off"></i> -->
+        <span>Sign off</span>
+      </a>
+    </li>
+  </ul>

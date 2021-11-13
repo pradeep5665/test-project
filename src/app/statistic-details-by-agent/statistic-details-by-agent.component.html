@@ -1,0 +1,293 @@
+<div id="wrapper">
+  <app-header></app-header>
+  <app-check-request-disabled *ngIf="userDetails.authorities !== 'ServicingAdmin'"></app-check-request-disabled>
+  <app-admin-check-request-disabled *ngIf="userDetails.authorities === 'ServicingAdmin'">
+  </app-admin-check-request-disabled>
+
+  <!-- <app-check-request *ngIf="userDetails.authorities !== 'ServicingAdmin'"></app-check-request>
+    <app-admin-dashboard *ngIf="userDetails.authorities === 'ServicingAdmin'">
+    </app-admin-dashboard> -->
+  <div id="content-wrapper">
+    <div class="container-fluid mt-3">
+      <div class="row">
+        <div class="col-md-12 mb-4">
+          <div class="card customCardWrapper">
+            <div class="card-header">
+              <h4>Statistics Selection By Agent Criteria</h4>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="statisticDetailAgentForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <div class="datePickerWrapper">
+                        <label for="inputPassword" class="col-form-label">Date From:</label>
+                        <!-- <input type="date" class="form-control" formControlName="dateFrom" [value]="statisticDetailForm.get('dateFrom')?.value | date: 'yyyy-MM-dd'"> -->
+                        <input type="date" class="form-control" formControlName="dateFrom"
+                          value="{{ post.dateFrom | date:'yyyy-MM-dd' }}">
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <div class="datePickerWrapper">
+                        <label for="inputPassword" class="col-form-label">Date To:</label>
+                        <!-- <input type="date" class="form-control" formControlName="dateTo" [value]="statisticDetailForm.get('dateTo')?.value | date: 'yyyy-MM-dd'"> -->
+                        <input type="date" class="form-control" formControlName="dateTo"
+                          value="{{ post.dateTo | date:'yyyy-MM-dd' }}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- checkbox section start -->
+                <div class="row static-checkbox-text">
+                  <div class="col-sm-2">
+                    <h4>
+                      payment type
+                    </h4>
+                  </div>
+                  <div class="col-sm-10 d-flex">
+                    <!-- <label class="custom-checkbox-agent">All
+                                <input type="checkbox" checked="checked" id="adviceAll" name="All"
+                                value="customEx" (change)="getAdviceType('All')">
+                                <span class="checkmark"></span>
+                              </label> -->
+                    <label class="custom-checkbox-agent">Cash
+                      <input type="checkbox" id="paymentCash" name="paymentCash" value="customEx" 
+                        (change)="getPaymentAdviceType('paymentCash',$event)" checked="checked">
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="custom-checkbox-agent">BK
+                      <input type="checkbox" id="paymentBank" name="paymentBank" value="customEx"
+                        (change)="getPaymentAdviceType('paymentBank',$event)" checked="checked">
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="custom-checkbox-agent">Coll
+                      <input type="checkbox" id="paymentColl" name="paymentColl" value="customEx"
+                        (change)="getPaymentAdviceType('paymentColl',$event)" checked="checked">
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="custom-checkbox-agent">Loss Mit
+                      <input type="checkbox" id="paymentLossMit" name="paymentLossMit" value="customEx"
+                        (change)="getPaymentAdviceType('paymentLossMit',$event)" checked="checked">
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="custom-checkbox-agent">Reg
+                      <input type="checkbox" id="paymentReg" name="paymentReg" value="customEx"
+                        (change)="getPaymentAdviceType('paymentReg',$event)" checked="checked">
+                      <span class="checkmark"></span>
+                    </label>
+                    
+                  </div>
+
+                </div>
+                <div class="row static-checkbox-text">
+                  <div class="col-sm-2">
+                    <h4>
+                      Advice Type
+                    </h4>
+                  </div>
+                  <div class="col-sm-10 d-flex">
+                    <!-- <label class="custom-checkbox-agent">All
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                              </label> -->
+                              <label class="custom-checkbox-agent">Cash
+                                <input type="checkbox" id="adviceCash" name="adviceCash" value="customEx" 
+                                  (change)="getAdviceType('adviceCash',$event)" checked="checked">
+                                <span class="checkmark"></span>
+                              </label>
+                              <label class="custom-checkbox-agent">BK
+                                <input type="checkbox" id="adviceBank" name="adviceBank" value="customEx"
+                                  (change)="getAdviceType('adviceBank',$event)" checked="checked">
+                                <span class="checkmark"></span>
+                              </label>
+                              <label class="custom-checkbox-agent">Coll
+                                <input type="checkbox" id="adviceColl" name="adviceColl" value="customEx"
+                                  (change)="getAdviceType('adviceColl',$event)" checked="checked">
+                                <span class="checkmark"></span>
+                              </label>
+                              <label class="custom-checkbox-agent">Loss Mit
+                                <input type="checkbox" id="adviceLossMit" name="adviceLossMit" value="customEx"
+                                  (change)="getAdviceType('adviceLossMit',$event)" checked="checked">
+                                <span class="checkmark"></span>
+                              </label>
+                             
+
+
+                  </div>
+
+                </div>
+                <div class="row static-checkbox-text">
+                  <div class="col-sm-2">
+                    <h4>Order By</h4>
+                  </div>
+                  <div class="col-sm-10 d-flex">
+
+                   
+                    <div class="custom-control custom-radio custom-radio-agent">
+                      <input type="radio" class="custom-control-input" id="customRadio"  name="radio"
+                        (change)="getOrderType('agent')">
+                      <label class="custom-control-label custom-radio-text" for="customRadio">
+                        Agent
+                      </label>
+                    </div>
+                    <div class="custom-control custom-radio custom-radio-agent">
+                      <input type="radio" class="custom-control-input" id="customRadio2" checked="checked" name="radio"
+                        (change)="getOrderType('Date')">
+                      <label class="custom-control-label custom-radio-text" for="customRadio2">
+                        Date
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- checkbox section end -->
+                </div>
+                <div class="export-btn-section">
+                  <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+                </div>
+                <div class="export-btn-section">
+                  <button class="btn btn-primary">Export</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="card customCardWrapper mt-5">
+            <div class="card-header">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 foroverflow">
+                    <table class="custom-table">
+                      <tr>
+                        <td class="pr-0">
+                          <div class="customLeftTableWrapper static-table-agent">
+                            <table class="table  left-table-section table-sm table-bordered">
+                              <tbody class="left-padding">
+                                <tr style="height: 29px; border-style:hidden;">
+                                </tr>
+                                <tr style="border-style:hidden;">
+                                  <td>Grand Total</td>
+                                </tr>
+                                <tr style="border-style:hidden;">
+                                  <ng-container *ngFor="let month of monthNames; let i = index;">
+                                <tr class="accordion-toggle" data-toggle="collapse"
+                                  (mouseover)="highlightRowforMonth(month)"
+                                  [ngClass]="{'colorYellow': selectedMonth===month, 'collapsed': i !== expandedIndex }"
+                                  style="border-style:hidden;">
+                                  <td class="expand-button forline" (click)="expandRow(i, month)" style="border-style:hidden;">
+                                  </td>
+                                  <td class="col-md-8 forline" colspan="2" 
+                                  [ngClass]="{'forfont': selectedMonth===month, 'collapsed': i !== expandedIndex }">{{month}}</td>
+                                </tr>
+                                <!-- <ng-container class="add-minus" *ngIf="i === expandedIndex">
+                                  <tr class="accordion-toggle" data-toggle="collapse"
+                                    *ngFor="let stPayment of this.statisticPaymentListByAgent; let in = index;"
+                                    [ngClass]="{colorYellow: selectedAgent===stPayment.agentName, 'collapsed': in !== agentexpandedIndex}">
+                                    <td style="border-style:hidden;">&nbsp;</td> 
+                                    <td class="expand-button forline" 
+                                      style="border-style:hidden;"
+                                      (mouseover)="highlightRowforAgent(in,stPayment.agentName, stPayment.month)"
+                                      (click)="expandRowAgent(in,stPayment.agentName,month,'')"
+                                      ></td>
+                                    <td style="border-style:hidden;" colspan="2"
+                                    [ngClass]="{forfont: selectedAgent===stPayment.agentName, 'collapsed': in !== agentexpandedIndex && stPayment.monthName==month}">{{stPayment.dateAgent}}
+                                   
+                                   <ng-container class="add-minus" *ngIf="in == agentexpandedIndex" >
+                                    <tr *ngFor="let stPayment of statisticAgentDetailList; let inn = index;"
+                                    [ngClass]="{colorYellow: selectedDate===stPayment.dateAgent }">
+                                      <td style="border-style:hidden; display:table-caption;">&nbsp;</td>
+                                      <td  style="border-style:hidden;"
+                                        (mouseover)="highlightRowforAgentDate(inn, stPayment.dateAgent, stPayment.agentName, stPayment.monthName)"
+                                       
+                                        [ngClass]="{forfont: selectedDate===stPayment.dateAgent }">
+                                        {{stPayment.dateAgent}}</td>
+                                      <td style="border-style:hidden;">&nbsp;</td>
+                                   
+                                    </tr>
+                                  
+                                </ng-container></td> -->
+                                
+                              </tr>
+                      <tr>
+                        <td>
+                          <!-- <table>
+                            <tbody>
+                             
+                            </tbody>
+                          </table> -->
+                        </td>
+                      </tr>
+                      </ng-container>
+                              </ng-container>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+
+                 
+                    <!-- <div class="customRightTableWrapper table-responsive">
+                      <table class="table table-sm table-bordered for-border">
+                        <thead>
+                          <tr>
+                            <th colspan="7">Payment</th>
+                            <th colspan="5">Completed Advice</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <td>Total</td>
+                          <td>Reg</td>
+                          <td>Cash</td>
+                          <td>BK</td>
+                          <td>Coll</td>
+                          <td>Loss Mit</td>
+                          <td>Waive Fee</td>
+                          <td>Total</td>
+                          <td>Cash</td>
+                          <td>BK</td>
+                          <td>Coll</td>
+                          <td>Loss Mit</td>
+                        </tbody>
+                        <tbody>
+                          <td>{{PmtTypetotalPaymentCount}}</td>
+                          <td>{{regularPaymentCount}}</td>
+                          <td>{{cashieringPaymentCount}}</td>
+                          <td>{{bankRuptcyPaymentCount}}</td>
+                          <td>{{collectionPaymentCount}}</td>
+                          <td>{{lossMitPaymentCount}}</td>
+                          <td>{{totalWaiveFeesAmount}}</td>
+                          
+                          <td>{{AdviceTypetotalPaymentCount}}</td>
+                          <td>{{cashieringAdviceCount}}</td>
+                          <td>{{bankRuptcyAdviceCount}}</td>
+                          <td>{{collectionAdviceCount}}</td>
+                          <td>{{lossMitAdviceCount}}</td>
+
+                        </tbody>
+                       
+                      </table>
+                    </div> -->
+
+                 
+                    <ag-grid-angular 
+    style="width: 500px; height: 500px;" 
+    class="ag-theme-balham"
+    [rowData]="rowData" 
+    [columnDefs]="columnDefs">
+</ag-grid-angular>
+                  </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
